@@ -20,12 +20,6 @@ const currentDot = ref(1);
 
 const embeds = reactive([]);
 
-const props = defineProps({
-  userId: {
-    default: null,
-  }
-})
-
 const dialogState = reactive({
   component: null,
   show: false,
@@ -70,7 +64,9 @@ onMounted(async () => {
   reloadWidgets();
 
   const socket = io(API_URL);
-  socket.on(`tweet-post-${props.userId}`, (result) => {
+  const token = localStorage.getItem('token');
+
+  socket.on(`tweet-post-${token}`, (result) => {
     if (result instanceof Array) {
       embeds.splice(0, embeds.length, ...result);
       reloadWidgets();
