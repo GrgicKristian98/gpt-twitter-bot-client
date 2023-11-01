@@ -156,7 +156,7 @@ onMounted(async () => {
     <transition-group name="list" tag="ul">
       <li v-for="(item, index) in items" :key="index" class="list-item">
         <button @click="toggleBotEnabled(index)" :disabled="item.saved">
-          <Icon class="icon" :icon="item.enabled ? 'mdi:robot' : 'mdi:robot-dead'" width="50"/>
+          <Icon class="disable-icon icon" :icon="item.enabled ? 'mdi:robot' : 'mdi:robot-dead'" width="50"/>
         </button>
         <input class="topic-input" v-model="item.topic" :disabled="item.saved" placeholder="Add a topic..."/>
         <input class="time-input" v-model="item.executionTime" type="time" :disabled="item.saved"/>
@@ -187,6 +187,7 @@ onMounted(async () => {
     font-size: 3em;
     margin-bottom: 20px;
     text-align: center;
+    width: 80%;
   }
 
   .add-btn {
@@ -295,7 +296,7 @@ onMounted(async () => {
   .dialog-content {
     .list-item {
       .topic-input {
-        width: 30%;
+        width: 50%;
       }
     }
   }
@@ -344,6 +345,10 @@ onMounted(async () => {
     }
 
     .list-item {
+      .topic-input {
+        width: 60%;
+      }
+
       input {
         font-size: 1em;
         height: auto;
@@ -351,6 +356,10 @@ onMounted(async () => {
 
       button {
         padding: 0;
+
+        .disable-icon {
+          display: none;
+        }
 
         .icon {
           width: 35px;

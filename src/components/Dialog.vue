@@ -1,4 +1,6 @@
 <script setup>
+import {Icon} from '@iconify/vue';
+
 const props = defineProps({
   show: {
     required: false,
@@ -34,6 +36,7 @@ function forwardTweet(event) {
       @click="closeDialog"
   >
     <div class="dialog">
+      <Icon icon="pajamas:close" class="close-button" @click="closeDialog" width="40"/>
       <component
           :is="props.component"
           @send-tweet="forwardTweet"
@@ -59,9 +62,17 @@ function forwardTweet(event) {
 }
 
 .dialog {
+  position: relative;
   background: #fff;
   padding: 0;
   border-radius: 8px;
   max-width: 90%;
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
 }
 </style>

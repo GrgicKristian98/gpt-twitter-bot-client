@@ -20,7 +20,7 @@ const sendTweet = () => {
 
 const setPlaceholderText = () => {
   const inputElement = document.querySelector('.dialog-content-row input');
-  if (window.innerWidth <= 700) {
+  if (window.innerWidth <= 640) {
     inputElement.placeholder = 'Add a topic...';
   } else {
     inputElement.placeholder = 'Add a topic you want to tweet about...';
@@ -67,7 +67,7 @@ onUnmounted(() => {
           @keyup.enter="sendTweet"
       />
       <button @click="sendTweet">
-        <Icon icon="bxs:send" width="80"/>
+        <Icon class="icon" icon="bxs:send" width="80"/>
       </button>
     </div>
     <p v-if="errorMsg !== null" class="error-text">{{ errorMsg }}</p>
@@ -85,6 +85,7 @@ onUnmounted(() => {
     font-size: 3em;
     margin-bottom: 20px;
     text-align: center;
+    width: 80%;
   }
 
   .dialog-content-row {
@@ -132,13 +133,23 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 640px) {
   .dialog-content {
-    .dialog-content-row {
-      flex-direction: column;
+    h1 {
+      font-size: 2.5em;
+    }
 
+    .dialog-content-row {
       input {
+        font-size: 1.2em;
+        height: 50px;
         width: 100%;
+      }
+
+      button {
+        .icon {
+          width: 55px;
+        }
       }
     }
   }
