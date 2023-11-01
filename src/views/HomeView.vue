@@ -68,8 +68,8 @@ onMounted(() => {
 <template>
   <main>
     <div v-if="loading && !tokenValid" class="spinner"></div>
-    <Main v-else-if="!loading && tokenValid && userId !== null" :userId="userId"/>
-    <Login v-else :errorMsg="errorMsg"/>
+    <Login v-else-if="!loading && !tokenValid" :errorMsg="errorMsg"/>
+    <Main v-else :userId="userId"/>
   </main>
 </template>
 
