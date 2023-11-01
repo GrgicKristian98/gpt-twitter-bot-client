@@ -13,14 +13,11 @@ class TweetAPI {
             body: JSON.stringify({topic})
         });
 
-        const responseObj = await response.json();
-
-        if (!responseObj.hasOwnProperty("embeds")) {
+        if (response.status !== 202) {
+            const responseObj = await response.json();
             throw new Error((responseObj.hasOwnProperty("message")) ? responseObj.message
                 : "Error posting tweet");
         }
-
-        return responseObj.embeds;
     }
 
     async getTweetsForUser() {

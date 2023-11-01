@@ -1,11 +1,13 @@
 <script setup>
 import {ref, reactive, markRaw, onMounted, onUnmounted} from 'vue';
+import {io} from "socket.io-client";
 import {Icon} from "@iconify/vue";
 import Dialog from "./Dialog.vue";
 import TweetNow from "./TweetNow.vue";
 import CreateBot from "./CreateBot.vue";
 import Embeds from "./Embeds.vue";
 import TweetAPI from "../api/tweetAPI.js";
+import {API_URL} from "../api/config/config.js";
 
 const GET_TWEETS_ERROR_MSG = 'An error occurred while getting your recent tweets. Try reloading the page.';
 const POST_TWEET_ERROR_MSG = 'An error occurred while posting your tweet. Please try again later.';
@@ -17,6 +19,12 @@ const errorMsg = ref(null);
 const currentDot = ref(1);
 
 const embeds = reactive([]);
+
+const props = defineProps({
+  userId: {
+    default: null,
+  }
+})
 
 const dialogState = reactive({
   component: null,
@@ -49,12 +57,9 @@ async function handleTweet(tweetText) {
   errorMsg.value = null;
   loading.value = true;
   try {
-    const returnedEmbeds = await TweetAPI.postTweet(tweetText);
-    embeds.splice(0, embeds.length, ...returnedEmbeds);
-    reloadWidgets();
+    await TweetAPI.postTweet(tweetText);
   } catch (error) {
     errorMsg.value = POST_TWEET_ERROR_MSG;
-  } finally {
     loading.value = false;
   }
 }
@@ -63,6 +68,18 @@ let dotInterval;
 onMounted(async () => {
   await getTweetsForUser();
   reloadWidgets();
+
+  const socket = io(API_URL);
+  socket.on(`tweet-post-${props.userId}`, (result) => {
+    if (result instanceof Array) {
+      embeds.splice(0, embeds.length, ...result);
+      reloadWidgets();
+      loading.value = false;
+      return;
+    }
+    errorMsg.value = POST_TWEET_ERROR_MSG;
+    loading.value = false;
+  });
 
   dotInterval = setInterval(() => {
     currentDot.value = currentDot.value % 3 + 1;

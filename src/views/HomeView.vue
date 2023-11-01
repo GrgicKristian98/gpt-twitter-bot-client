@@ -14,6 +14,7 @@ const router = useRouter();
 const loading = ref(true);
 const tokenValid = ref(false);
 const errorMsg = ref(null);
+const userId = ref(null);
 
 const storedToken = localStorage.getItem('token');
 
@@ -23,8 +24,9 @@ const stateParam = route.query.state;
 function validateUser(token) {
   UserAPI
       .validateUser(token)
-      .then(() => {
+      .then((id) => {
         tokenValid.value = true;
+        userId.value = id;
       })
       .catch((error) => {
         throw error;
@@ -66,8 +68,8 @@ onMounted(() => {
 <template>
   <main>
     <div v-if="loading && !tokenValid" class="spinner"></div>
-    <Login v-else-if="!loading && !tokenValid" :errorMsg="errorMsg"/>
-    <Main v-else/>
+    <Main v-else-if="!loading && tokenValid && userId !== null" :userId="userId"/>
+    <Login v-else :errorMsg="errorMsg"/>
   </main>
 </template>
 

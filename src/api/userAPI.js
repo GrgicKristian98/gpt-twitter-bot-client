@@ -48,10 +48,12 @@ class UserAPI {
                 : "Unauthorized", response.status);
         }
 
-        if (response.status !== 200) {
+        if (!responseObj.hasOwnProperty("userId")) {
             throw new HttpError((responseObj.hasOwnProperty("message")) ? responseObj.message
                 : "Internal server error", response.status);
         }
+
+        return responseObj.userId;
     }
 }
 

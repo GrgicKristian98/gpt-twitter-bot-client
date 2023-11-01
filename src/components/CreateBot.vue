@@ -112,7 +112,6 @@ async function updateExecution(index) {
 async function deleteExecution(index) {
   await ExecutionAPI
       .deleteExecution(items[index].id).then((result) => {
-        console.log("result: " + result);
         if (result === true || result === 'true') {
           items.splice(index, 1);
           errorMsg.value = null;
