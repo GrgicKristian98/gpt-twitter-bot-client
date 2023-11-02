@@ -96,11 +96,6 @@ onUnmounted(() => {
         @mouseout="showExplanation1 = false"
     >
       <Icon class="icon" icon="eva:twitter-outline" width="110"/>
-      <transition name="fade-slide-left">
-        <div v-show="showExplanation1" class="modal left">
-          <p>Post a tweet now</p>
-        </div>
-      </transition>
     </button>
     <button
         @click="openDialog(CreateBot)"
@@ -108,11 +103,6 @@ onUnmounted(() => {
         @mouseout="showExplanation2 = false"
     >
       <Icon class="icon" icon="fluent:bot-add-20-filled" width="110"/>
-      <transition name="fade-slide-right">
-        <div v-show="showExplanation2" class="modal right">
-          <p>Create a new Twitter bot</p>
-        </div>
-      </transition>
     </button>
   </div>
   <div v-else class="loading-container">
@@ -165,37 +155,6 @@ onUnmounted(() => {
       transform: scale(1.1);
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
     }
-
-    .modal {
-      position: absolute;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 4px;
-      width: 200px;
-      z-index: 1000;
-      transition: all 0.2s ease-in-out;
-
-      p {
-        color: #26a7de;
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin: 0;
-      }
-    }
-
-    .left {
-      top: 50%;
-      left: -220px;
-      transform: translateY(-50%);
-    }
-
-    .right {
-      top: 50%;
-      right: -220px;
-      transform: translateY(-50%);
-    }
   }
 }
 
@@ -239,28 +198,6 @@ onUnmounted(() => {
   }
 }
 
-.fade-slide-left-enter-active,
-.fade-slide-left-leave-active {
-  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.fade-slide-left-enter-from,
-.fade-slide-left-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.fade-slide-right-enter-active,
-.fade-slide-right-leave-active {
-  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.fade-slide-right-enter-from,
-.fade-slide-right-leave-to {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
 @media (max-width: 688px) {
   .button-desc {
     font-size: 1.5rem;
@@ -270,10 +207,6 @@ onUnmounted(() => {
     button {
       width: 100px;
       height: 100px;
-
-      .modal {
-        display: none;
-      }
 
       .icon {
         width: 80px;
