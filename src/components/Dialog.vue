@@ -36,7 +36,9 @@ function forwardTweet(event) {
       @click="closeDialog"
   >
     <div class="dialog">
-      <Icon icon="pajamas:close" class="close-button" @click="closeDialog" width="40"/>
+      <button class="close-button" @click="emitUpdateShowFalse">
+        <Icon icon="pajamas:close" class="close-icon" width="40"/>
+      </button>
       <component
           :is="props.component"
           @send-tweet="forwardTweet"
@@ -69,10 +71,12 @@ function forwardTweet(event) {
   max-width: 90%;
 
   .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
+    .close-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
   }
 }
 </style>
